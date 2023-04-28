@@ -34,10 +34,10 @@ def load_transactions_from_json(file_path: str) -> List[Transaction]:
     """
     import json
     with open(file_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+        raw_data = json.load(f)
     transactions = []
-    for item in data:
-        if 'from' in item:
+    for item in raw_data:
+        if 'from' in item and item['state'] == "EXECUTED":
             transactions.append(Transaction(
                 id=item['id'],
                 state=item['state'],
@@ -45,7 +45,7 @@ def load_transactions_from_json(file_path: str) -> List[Transaction]:
                 amount=float(item['operationAmount']['amount']),
                 currency=item['operationAmount']['currency']['name'],
                 description=item['description'],
-                from_account=item["from"],
+                from_account=item['from'],
                 to_account=item['to']
             ))
     return transactions
