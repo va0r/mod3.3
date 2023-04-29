@@ -113,7 +113,11 @@ def test_convert_transactions(data_transactions, valid_transaction):
     assert convert_transactions(data_transactions[3:4]) == []
 
 
-def test_load_transactions_from_json(error_file_path):
+def test_load_transactions_from_json(error_file_path, file_path='operations.json'):
+    transactions = load_transactions_from_json(file_path)
+    assert len(transactions) == 76
+    assert type(transactions) == list
+    assert type(transactions[0]) == source.transactions.Transaction
     with pytest.raises(FileNotFoundError):
         assert load_transactions_from_json(error_file_path)
 
