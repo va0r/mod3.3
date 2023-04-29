@@ -110,6 +110,7 @@ def test_convert_transactions(data_transactions, valid_transaction):
     assert len(transactions) == 3
     assert type(transactions) == list
     assert type(transactions[0]) == source.transactions.Transaction
+    assert convert_transactions(data_transactions[3:4]) == []
 
 
 def test_load_transactions_from_json(error_file_path):
@@ -124,4 +125,3 @@ def test_get_last_transactions(data_transactions, valid_transaction):
     assert type(two_last_transactions) == list
     assert type(two_last_transactions[0]) == source.transactions.Transaction
     assert len(two_last_transactions) == 2
-    print(two_last_transactions)
