@@ -3,23 +3,19 @@ from datetime import datetime
 
 def format_account(account_data: str) -> str:
     """
-    Функция выводит карту или счет клиента, в следующем формате XXXX XX** **** XXXX.
+    Маскирует карту или счет клиента.
     """
-    # Находим индекс, начиная с которого начинаются цифры
     digit_start_index = len(account_data)
     for i, char in enumerate(account_data):
         if char.isdigit():
             digit_start_index = i
             break
-    # Разделяем текст и цифры
     account_name = account_data[:digit_start_index - 1]
     account_digits = account_data[digit_start_index:]
-    # Маскируем цифры
     if len(account_digits) == 20:
         masked_digits = f"**{account_digits[-4:]}"
     else:
         masked_digits = f"{account_digits[:4]} {account_digits[4:6]}** **** {account_digits[-4:]}"
-    # Выводим результат
     masked_number = f"{account_name} {masked_digits}"
     return masked_number
 

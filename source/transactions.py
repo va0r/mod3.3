@@ -5,8 +5,6 @@ from typing import List
 @dataclass
 class Transaction:
     """
-    Класс Transaction представляет информацию о финансовой транзакции.
-    Атрибуты:
     id (int): Идентификатор транзакции.
     state (str): Статус транзакции, возможные значения: EXECUTED, CANCELED.
     date (str): Дата выполнения транзакции в формате ГГГГ-ММ-ДДTЧЧ:ММ:СС.МСК.
@@ -28,8 +26,8 @@ class Transaction:
 
 def load_transactions_from_json(file_path: str) -> List[Transaction]:
     """
-    Функция возвращает список объектов класса Transaction.
-    :param file_path: Путь к файлу.
+    Возвращает список объектов класса Transaction.
+    :param file_path: Путь к файлу с транзакциями.
     :return: Список объектов класса Transaction.
     """
     import json
@@ -39,6 +37,11 @@ def load_transactions_from_json(file_path: str) -> List[Transaction]:
 
 
 def convert_transactions(data: List[dict]) -> List[Transaction]:
+    """
+    Возвращает список отобранных транзакций.
+    :param data: Все транзакции из json-файла.
+    :return: Список отобранных по параметрам транзакций.
+    """
     transactions = []
     for item in data:
         if 'from' in item and item['state'] == 'EXECUTED':
@@ -57,9 +60,9 @@ def convert_transactions(data: List[dict]) -> List[Transaction]:
 
 def get_last_transactions(transactions: List[Transaction], count: int = 5) -> List[Transaction]:
     """
-    Функция получения последней транзакции из списка объектов класса Transaction.
+    Возвращает нужное количество последних транзакций из списка объектов класса Transaction.
     :param transactions: Список объектов класса Transaction.
-    :param count: Количество транзакций.
+    :param count: Количество транзакций, по умолчания равно 5.
     :return: Список объектов класса Transaction.
     """
     return sorted(transactions, key=lambda t: t.date, reverse=True)[:count]
